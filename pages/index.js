@@ -2,17 +2,38 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
+// import { useCallback } from 'react';
 import { useFonts } from 'expo-font';
+// import * as SplashScreen from 'expo-splash-screen';
+
+// SplashScreen.preventAutoHideAsync();
+
 import * as Animatable from 'react-native-animatable';
 
 export default function Bem_Vindo() {
 
     const navigation = useNavigation();
 
+    // apagar ao trocar
     useFonts({ 'Oswald': require('../assets/fonts/Oswald-VariableFont_wght.ttf') });
 
+    // const [fontsLoaded, fontError] = useFonts({
+    //     'Oswald': require('../assets/fonts/Oswald-VariableFont_wght.ttf'),
+    // });
+    // const onLayoutRootView = useCallback(async () => {
+    //     if (fontsLoaded || fontError) {
+    //         await SplashScreen.hideAsync();
+    //     }
+    // }, [fontsLoaded, fontError]);
+
+    // if (!fontsLoaded && !fontError) {
+    //     return null;
+    // }
+
+    //DENTRO DO VIEW onLayout={onLayoutRootView}
+
     return (
-        <View style={styles.container} >
+        <View style={styles.container}>
             <View style={styles.containerLogo}>
                 <Animatable.Image
                     delay={1000}

@@ -10,42 +10,59 @@ import {
 } from 'react-native';
 
 import React from 'react';
+
 import { useNavigation } from '@react-navigation/native';
 
 import * as Animatable from 'react-native-animatable';
 
-export default function Acesso() {
+import { useState } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export default function Cadastro() {
 
     const navigation = useNavigation();
+
+    const storeData = async (value) => {
+        try {
+          await AsyncStorage.setItem('my-key', value);
+        } catch (e) {
+          // saving error
+        }
+      };
 
     return (
         <KeyboardAvoidingView style={{ flex: 1 }}>
             <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
                 <View style={styles.container}>
                     <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
-                        <Text style={styles.message}>Bem-vindo(a)</Text>
+                        <Text style={styles.message}>Crie sua Conta</Text>
                     </Animatable.View>
                     <Animatable.View animation="fadeInUp" style={styles.containerForm}>
                         <Text style={styles.title}>
                             E-mail
                         </Text>
                         <TextInput
-                            placeholder='Digite um E-Mail...'
+                            placeholder='Insira seu E-Mail...'
                             style={styles.input}
                         />
                         <TextInput
-                            placeholder='Sua senha'
+                            placeholder='Crie sua senha'
                             style={styles.input}
                         />
-                        <TouchableOpacity style={styles.button}>
+                        <TextInput
+                            placeholder='Confirme sua senha'
+                            style={styles.input}
+                        />
+                        <TouchableOpacity style={styles.button}
+                            onPress={() => navigation.navigate('entrada')}>
                             <Text style={styles.buttonText}>
-                                Acessar
+                                Criar Conta
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.buttonRegister}
-                            onPress={() => navigation.navigate('cadastro')}>
+                            onPress={() => navigation.navigate('entrada')}>
                             <Text style={styles.registerText}>
-                                Não possui uma conta? Cadastre-se
+                                Já possui uma conta? Entre Aqui
                             </Text>
                         </TouchableOpacity>
                     </Animatable.View>
