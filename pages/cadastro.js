@@ -1,70 +1,78 @@
+import React, { useState } from 'react';
 import {
-    View,
-    Text,
-    StyleSheet,
-    TextInput,
-    TouchableOpacity,
-    KeyboardAvoidingView,
-    Keyboard,
-    TouchableWithoutFeedback
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback
 } from 'react-native';
-
-import React from 'react';
-
 import { useNavigation } from '@react-navigation/native';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Animatable from 'react-native-animatable';
 
-import { useState } from "react";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 export default function Cadastro() {
+  const navigation = useNavigation();
 
-    const navigation = useNavigation();
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const [confirmarSenha, setConfirmarSenha] = useState('');
 
-    const storeData = async (value) => {
-        try {
-          await AsyncStorage.setItem('my-key', value);
-        } catch (e) {
-          // saving error
-        }
-      };
+  const storeData = async () => {
+    try {
+      // Verifica se as senhas coincidem
+      if (senha !== confirmarSenha) {
+        console.error('As senhas não coincidem');
+        return;
+      }
 
-    return (
-        <KeyboardAvoidingView style={{ flex: 1 }}>
-            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-                <View style={styles.container}>
-                    <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
-                        <Text style={styles.message}>Crie sua Conta</Text>
-                    </Animatable.View>
-                    <Animatable.View animation="fadeInUp" style={styles.containerForm}>
-                        <Text style={styles.title}>
-                            E-mail
-                        </Text>
-                        <TextInput
-                            placeholder='Insira seu E-Mail...'
-                            style={styles.input}
-                        />
-                        <TextInput
-                            placeholder='Crie sua senha'
-                            style={styles.input}
-                        />
-                        <TextInput
-                            placeholder='Confirme sua senha'
-                            style={styles.input}
-                        />
-                        <TouchableOpacity style={styles.button}
-                            onPress={() => navigation.navigate('entrada')}>
-                            <Text style={styles.buttonText}>
-                                Criar Conta
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonRegister}
-                            onPress={() => navigation.navigate('entrada')}>
-                            <Text style={styles.registerText}>
-                                Já possui uma conta? Entre Aqui
-                            </Text>
-                        </TouchableOpacity>
+      // Salva os dados no AsyncStorage
+      await AsyncStorage.setItem('email', email);
+      await AsyncStorage.setItem('senha', senha);
+
+      console.log('Dados salvos com sucesso');
+    } catch (error) {
+      console.error('Erro ao salvar os dados:', error);
+    }
+  };
+
+  return (
+    <KeyboardAvoidingView style={{ flex: 1 }}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <View style={styles.container}>
+          <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
+            <Text style={styles.message}>Crie sua Conta</Text>
+          </Animatable.View>
+          <Animatable.View animation="fadeInUp" style={styles.containerForm}>
+            <Text style={styles.title}>E-mail</Text>
+            <TextInput
+              value={email}
+              onChangeText={setEmail}
+              placeholder='Insira seu E-Mail...'
+              style={styles.input}
+            />
+            <TextInput
+              value={senha}
+              placeholder='Crie sua senha'
+              style={styles.input}
+              secureTextEntry={true}
+              onChangeText={setSenha}
+            />
+            <TextInput
+              value={confirmarSenha}
+              placeholder='Confirme sua senha'
+              style={styles.input}
+              secureTextEntry={true}
+              onChangeText={setConfirmarSenha}
+            />
+            <TouchableOpacity style={styles.button} onPress={() => { storeData(); navigation.navigate('entrada'); }}>
+              <Text style={styles.buttonText}>Criar Conta</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('entrada')}>
+              <Text style={styles.registerText}>Já possui uma conta? Entre Aqui</Text>
+            </TouchableOpacity>
                     </Animatable.View>
                 </View>
             </TouchableWithoutFeedback>

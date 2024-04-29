@@ -1,58 +1,82 @@
+import React, { useState } from 'react';
 import {
-    View,
-    Text,
-    StyleSheet,
-    TextInput,
-    TouchableOpacity,
-    KeyboardAvoidingView,
-    Keyboard,
-    TouchableWithoutFeedback
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback
 } from 'react-native';
 
-import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Animatable from 'react-native-animatable';
 
 export default function Acesso() {
+  const navigation = useNavigation();
 
-    const navigation = useNavigation();
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
 
-    return (
-        <KeyboardAvoidingView style={{ flex: 1 }}>
-            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-                <View style={styles.container}>
-                    <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
-                        <Text style={styles.message}>Bem-vindo(a)</Text>
-                    </Animatable.View>
-                    <Animatable.View animation="fadeInUp" style={styles.containerForm}>
-                        <Text style={styles.title}>
-                            E-mail
-                        </Text>
-                        <TextInput
-                            placeholder='Digite um E-Mail...'
-                            style={styles.input}
-                        />
-                        <TextInput
-                            placeholder='Sua senha'
-                            style={styles.input}
-                        />
-                        <TouchableOpacity style={styles.button}>
-                            <Text style={styles.buttonText}>
-                                Acessar
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.buttonRegister}
-                            onPress={() => navigation.navigate('cadastro')}>
-                            <Text style={styles.registerText}>
-                                Não possui uma conta? Cadastre-se
-                            </Text>
-                        </TouchableOpacity>
-                    </Animatable.View>
-                </View>
-            </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
-    )
+  const verificarAcesso = async () => {
+    try {
+      // Busca os dados salvos no AsyncStorage
+      const emailSalvo = await AsyncStorage.getItem('email');
+      const senhaSalva = await AsyncStorage.getItem('senha');
+
+      // Verifica se os dados salvos correspondem aos inseridos nos campos
+      if (email === emailSalvo && senha === senhaSalva) {
+        // Navega para a próxima tela se os dados coincidirem
+        navigation.navigate('inicioRecursosDidaticos');
+      } else {
+        console.error('E-mail ou senha incorretos');
+      }
+    } catch (error) {
+      console.error('Erro ao verificar o acesso:', error);
+    }
+  };
+
+  return (
+    <KeyboardAvoidingView style={{ flex: 1 }}>
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <View style={styles.container}>
+
+            <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('index')}>
+              <Text style={styles.registerText}>Voltar</Text>
+            </TouchableOpacity>
+
+          <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
+            <Text style={styles.message}>Bem-vindo(a)</Text>
+          </Animatable.View>
+          <Animatable.View animation="fadeInUp" style={styles.containerForm}>
+            <Text style={styles.title}>E-mail</Text>
+            <TextInput
+              placeholder='Digite um E-Mail...'
+              style={styles.input}
+              value={email}
+              onChangeText={setEmail}
+            />
+            <TextInput
+              placeholder='Sua senha'
+              style={styles.input}
+              secureTextEntry={true}
+              value={senha}
+              onChangeText={setSenha}
+            />
+            <TouchableOpacity style={styles.button} onPress={verificarAcesso}>
+              <Text style={styles.buttonText}>Acessar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('cadastro')}>
+              <Text style={styles.registerText}>Não possui uma conta? Cadastre-se</Text>
+            </TouchableOpacity>
+          </Animatable.View>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
+  );
 }
 
 const styles = StyleSheet.create({
