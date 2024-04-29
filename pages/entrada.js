@@ -10,6 +10,8 @@ import {
   TouchableWithoutFeedback
 } from 'react-native';
 
+import { Ionicons } from '@expo/vector-icons';
+
 import { useNavigation } from '@react-navigation/native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -44,9 +46,10 @@ export default function Acesso() {
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.container}>
 
-            <TouchableOpacity style={styles.buttonRegister} onPress={() => navigation.navigate('index')}>
-              <Text style={styles.registerText}>Voltar</Text>
-            </TouchableOpacity>
+          <TouchableOpacity style={styles.btnVoltar} onPress={() => navigation.navigate('index')}>
+            <Ionicons name="arrow-left" size={32} color="blue" />
+            <Text style={styles.btnVoltar}>Voltar</Text>
+          </TouchableOpacity>
 
           <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
             <Text style={styles.message}>Bem-vindo(a)</Text>
@@ -80,57 +83,62 @@ export default function Acesso() {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#880000'
-    },
-    containerHeader: {
-        marginTop: '14%',
-        marginBottom: '8%',
-        paddingStart: '5%',
-    },
-    message: {
-        fontSize: 28,
-        fontWeight: 'bold',
-        color: "#FFF"
-    },
-    containerForm: {
-        backgroundColor: "#FFF",
-        flex: 1,
-        borderTopLeftRadius: 25,
-        borderTopRightRadius: 25,
-        paddingStart: "5%",
-        paddingEnd: "5%"
-    },
-    title: {
-        fontSize: 20,
-        marginTop: 28,
-    },
-    input: {
-        borderBottomWidth: 1,
-        height: 40,
-        marginBottom: 12,
-        fontSize: 16
-    },
-    button: {
-        backgroundColor: '#880000',
-        width: '100%',
-        borderRadius: 4,
-        paddingVertical: 8,
-        marginTop: 14,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    buttonText: {
-        color: "#FFF",
-        fontSize: 18,
-        fontWeight: 'bold'
-    },
-    buttonRegister: {
-        marginTop: 14,
-        alignSelf: 'center'
-    },
-    registerText: {
-        color: '#a1a1a1'
-    }
+  container: {
+    flex: 1,
+    backgroundColor: '#880000'
+  },
+  containerHeader: {
+    marginTop: '14%',
+    marginBottom: '8%',
+    paddingStart: '5%',
+  },
+  message: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: "#FFF"
+  },
+  containerForm: {
+    backgroundColor: "#FFF",
+    flex: 1,
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    paddingStart: "5%",
+    paddingEnd: "5%"
+  },
+  title: {
+    fontSize: 20,
+    marginTop: 28,
+  },
+  input: {
+    borderBottomWidth: 1,
+    height: 40,
+    marginBottom: 12,
+    fontSize: 16
+  },
+  button: {
+    backgroundColor: '#880000',
+    width: '100%',
+    borderRadius: 4,
+    paddingVertical: 8,
+    marginTop: 14,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: "#FFF",
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
+  buttonRegister: {
+    marginTop: 14,
+    alignSelf: 'center'
+  },
+  registerText: {
+    color: '#a1a1a1'
+  },
+  btnVoltar: {
+    color: '#fff',
+    marginLeft: 10,
+    marginTop: 10,
+  }
 })
