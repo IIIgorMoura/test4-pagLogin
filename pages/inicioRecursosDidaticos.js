@@ -4,6 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 
 import { useFonts } from 'expo-font';
 
+import { Ionicons } from '@expo/vector-icons';
+
 import * as Animatable from 'react-native-animatable';
 
 export default function InicioRecursosDidaticos() {
@@ -12,6 +14,10 @@ export default function InicioRecursosDidaticos() {
 
     return (
         <View style={styles.container}>
+            <TouchableOpacity style={styles.btnVoltar} onPress={() => navigation.navigate('entrada')}>
+                <Ionicons name="chevron-back-outline" color="#880000" size={20}></Ionicons>
+                <Text style={styles.btnVoltarTxt}>Sair</Text>
+            </TouchableOpacity>
             <View style={styles.containerLogo}>
                 <Animatable.Image
                     delay={1000}
@@ -84,4 +90,18 @@ const styles = StyleSheet.create({
         color: '#880000',
         fontWeight: 'bold'
     },
+    btnVoltar: {
+        display: "flex",
+        color: '#fff',
+        marginLeft: 10,
+        marginTop: 10,
+        width: 60,
+        flexDirection: "row",
+        alignItems: "center",
+        verticalAlign: "middle"
+      },
+      btnVoltarTxt: {
+        color: "#880000",
+        marginLeft: 10,
+      }
 })

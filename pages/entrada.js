@@ -47,8 +47,8 @@ export default function Acesso() {
         <View style={styles.container}>
 
           <TouchableOpacity style={styles.btnVoltar} onPress={() => navigation.navigate('index')}>
-          <Ionicons name="chevron-back-outline" color="white" size={20}></Ionicons>
-            <Text style={styles.btnVoltar}>Voltar</Text>
+            <Ionicons name="chevron-back-outline" color="white" size={20}></Ionicons>
+            <Text style={styles.btnVoltarTxt}>Voltar</Text>
           </TouchableOpacity>
 
           <Animatable.View animation="fadeInLeft" delay={500} style={styles.containerHeader}>
@@ -137,8 +137,17 @@ const styles = StyleSheet.create({
     color: '#a1a1a1'
   },
   btnVoltar: {
+    display: "flex",
     color: '#fff',
     marginLeft: 10,
     marginTop: 10,
+    width: 60,
+    flexDirection: "row",
+    alignItems: "center",
+    verticalAlign: "middle"
+  },
+  btnVoltarTxt: {
+    color: "#fff",
+    marginLeft: 10,
   }
 })
