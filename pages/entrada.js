@@ -47,7 +47,7 @@ export default function Acesso() {
         <View style={styles.container}>
 
           <TouchableOpacity style={styles.btnVoltar} onPress={() => navigation.navigate('index')}>
-            <Ionicons name="arrow-left" size={32} color="blue" />
+          <Ionicons name="chevron-back-outline" color="white" size={20}></Ionicons>
             <Text style={styles.btnVoltar}>Voltar</Text>
           </TouchableOpacity>
 
